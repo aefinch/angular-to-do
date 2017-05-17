@@ -4,12 +4,13 @@ app.factory("ItemFactory", function($q, $http, FIREBASE_CONFIG){
 		return $q((resolve, reject) => {
 			$http.get(`${FIREBASE_CONFIG.databaseURL}/items.json`)        //use $http instead of $.ajax
 			.then((fbItems) => {
-				var itemCollection = fbItems.data;
+				let itemCollection = fbItems.data;
+				if(itemCollection !== null){
 	            Object.keys(itemCollection).forEach((key) => {
 		            itemCollection[key].id=key;
 		            itemz.push(itemCollection[key]);
-
           });
+		        }
           resolve(itemz);
 			}).catch((error) => {
 				reject(error);
