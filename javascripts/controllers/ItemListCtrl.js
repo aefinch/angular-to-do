@@ -10,12 +10,19 @@ app.controller("ItemListCtrl", function($scope, ItemFactory){
 	};
 
 	getItems();
-	
+
 	$scope.deleteItem = (id) => {
 		ItemFactory.deletz(id).then(() => {
 			getItems();
 		}).catch((error) => {
 			console.log("deleteItem error", error);
+		});
+	};
+
+	$scope.inputChange = (item) => {
+		ItemFactory.editItem(item).then(() => {
+		}).catch((error) => {
+			console.log("editItem error", error);
 		});
 	};
 });
