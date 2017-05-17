@@ -17,6 +17,27 @@ app.factory("ItemFactory", function($q, $http, FIREBASE_CONFIG){
 			});
 		});
 	};
+	let getSingleItem = (id) => {
+		return $q((resolve, reject) => {
+			$http.get(`${FIREBASE_CONFIG.databaseURL}/items/${id}.json`)        //use $http instead of $.ajax
+			.then((resultz) => {
+				resultz.data.id = id;
+	          resolve(resultz);
+			}).catch((error) => {
+				reject(error);
+			});
+		});
+	};
+	let deletz = (itemId) => {
+		return $q((resolve, reject) => {
+			$http.delete(`${FIREBASE_CONFIG.databaseURL}/items/${itemId}.json`)
+			.then((resultz) => {
+				resolve(resultz);
+			}).catch((error) => {
+				reject(error);
+			});
+		});
+	};
 	let postNewItem = (newItem) => {
 		return $q((resolve, reject) => {
 			$http.post(`${FIREBASE_CONFIG.databaseURL}/items.json`, JSON.stringify(newItem))
@@ -28,16 +49,6 @@ app.factory("ItemFactory", function($q, $http, FIREBASE_CONFIG){
 		});
 	};
 
-	let deletz = (itemId) => {
-		return $q((resolve, reject) => {
-			$http.delete(`${FIREBASE_CONFIG.databaseURL}/items/${itemId}.json`)
-			.then((resultz) => {
-				resolve(resultz);
-			}).catch((error) => {
-				reject(error);
-			});
-		});
-	};
 
 	let editItem = (item) => {
 		return $q((resolve, reject) => {
@@ -55,5 +66,6 @@ app.factory("ItemFactory", function($q, $http, FIREBASE_CONFIG){
 		});
 	};
 
-	return {getItemList:getItemList, postNewItem:postNewItem, deletz:deletz, editItem:editItem};
+
+	return {getItemList:getItemList, getSingleItem:getSingleItem, postNewItem:postNewItem, deletz:deletz, editItem:editItem};
 });
