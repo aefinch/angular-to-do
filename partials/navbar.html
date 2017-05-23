@@ -14,10 +14,12 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     
      
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-right" ng-if="user.uid">
         <li><a ng-href="#!/items/list">All Items</a></li>
         <li><a ng-href="#!/items/new">New Items</a></li>
         <li><a ng-href="#!/logout">Logout</a></li>   
+      </ul>
+      <ul class="nav navbar-nav navbar-right" ng-if="!user.uid">
         <li><a ng-href="#!/auth">Authenticate</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
