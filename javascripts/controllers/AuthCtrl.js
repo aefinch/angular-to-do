@@ -1,5 +1,21 @@
-app.controller("AuthCtrl", function($scope, AuthFactory, UserFactory){
-	$scope.auth = {};
+app.controller("AuthCtrl", function($location, $rootScope, $scope, AuthFactory, UserFactory){
+	$scope.auth = {
+		email: "a@a.com",
+		password: "123456"
+	};
+
+	let logMeIn = () => {
+		AuthFactory.authenticate($scope.auth).then((userCreds) => {
+			return UserFactory.getUser(userCreds.uid);
+		},(error) => {
+			console.log("authenticate error", error);
+		}).then((user) => {
+			$rootScope.user = user;
+			$location.url('/items/list');
+		}).catch((error) => {
+			console.log("getUser error", error);
+		});
+	};
 
 	$scope.registerUser = () => {
 		//new auth
@@ -12,13 +28,12 @@ app.controller("AuthCtrl", function($scope, AuthFactory, UserFactory){
 		}, (error) => {
 			console.log("registerWithEmail error", error);
 		}).then((registerComplete) => {
-			console.log("registerComplete", registerComplete);
+			logMeIn();
 		}).catch((error) => {
 			console.log("addUser error", error);
 		});
 	};
 	$scope.loginUser = () => {
-
-
+		logMeIn();
 	};
 });
