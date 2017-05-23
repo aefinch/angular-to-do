@@ -57,8 +57,6 @@ app.config(function($routeProvider){
 		templateUrl: 'partials/item-view.html',
 		controller: 'ItemViewCtrl',
 		resolve : {isAuth}
-
-
 	})
 	.when('/item/edit/:id', {
 		templateUrl: 'partials/item-new.html',
